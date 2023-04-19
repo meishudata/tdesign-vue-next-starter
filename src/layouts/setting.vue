@@ -71,20 +71,20 @@
         </t-form-item>
 
         <div class="setting-group-title">元素开关</div>
-        <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
+        <!-- <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
           <t-switch v-model="formData.showHeader" />
-        </t-form-item>
-        <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
+        </t-form-item> -->
+        <t-form-item label="显示 面包屑导航" name="showBreadcrumb">
           <t-switch v-model="formData.showBreadcrumb" />
         </t-form-item>
-        <t-form-item label="显示 Footer" name="showFooter">
+        <!-- <t-form-item label="显示 Footer" name="showFooter">
           <t-switch v-model="formData.showFooter" />
-        </t-form-item>
-        <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
+        </t-form-item> -->
+        <t-form-item label="启用 多标签Tab页" name="isUseTabsRouter">
           <t-switch v-model="formData.isUseTabsRouter"></t-switch>
         </t-form-item>
       </t-form>
-      <div class="setting-info">
+      <div class="setting-info" style="display: none">
         <p>请复制后手动修改配置文件: /src/config/style.ts</p>
         <t-button theme="primary" variant="text" @click="handleCopy"> 复制配置项 </t-button>
       </div>
@@ -252,7 +252,7 @@ watchEffect(() => {
 .setting-group-title {
   font-size: 14px;
   line-height: 22px;
-  margin: 32px 0 24px 0;
+  margin: 5px 0 10px;
   text-align: left;
   font-family: PingFang SC;
   font-style: normal;
@@ -342,5 +342,9 @@ watchEffect(() => {
       margin-right: 0;
     }
   }
+}
+
+.t-form__item {
+  margin-bottom: 0;
 }
 </style>
