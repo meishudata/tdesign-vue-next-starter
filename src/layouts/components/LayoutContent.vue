@@ -1,9 +1,10 @@
+<!-- eslint-disable vue-scoped-css/enforce-style-type -->
 <template>
   <t-layout :class="`${prefix}-layout`">
     <t-tabs
       v-if="settingStore.isUseTabsRouter"
       drag-sort
-      theme="card"
+      theme="normal"
       :class="`${prefix}-layout-tabs-nav`"
       :value="$route.path"
       :style="{ position: 'sticky', top: 0, width: '100%' }"
@@ -161,3 +162,12 @@ const handleDragend = (options: { currentIndex: number; targetIndex: number }) =
   ];
 };
 </script>
+<!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
+<style lang="less">
+.t-tabs__nav-item-wrapper {
+  margin-right: 0;
+}
+.t-tabs__nav-item > .remove-btn {
+  margin-left: 0;
+}
+</style>

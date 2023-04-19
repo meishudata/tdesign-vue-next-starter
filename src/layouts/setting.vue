@@ -200,7 +200,7 @@ watchEffect(() => {
 </script>
 <!-- teleport导致drawer 内 scoped样式问题无法生效 先规避下 -->
 <!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
-<style scoped lang="less">
+<style lang="less">
 .tdesign-setting {
   z-index: 100;
   position: fixed;
@@ -344,7 +344,11 @@ watchEffect(() => {
   }
 }
 
-.t-form__item {
-  margin-bottom: 0;
+.setting-container {
+  .t-form {
+    .t-form__item {
+      margin-bottom: 0;
+    }
+  }
 }
 </style>
