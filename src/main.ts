@@ -8,6 +8,7 @@ import { store } from './store';
 
 import 'tdesign-vue-next/es/style/index.css';
 import '@/style/index.less';
+import '@/theme/theme.css';
 import './permission';
 
 const app = createApp(App);

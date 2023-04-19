@@ -1,5 +1,5 @@
 export default {
-  showFooter: true,
+  showFooter: false,
   isSidebarCompact: false,
   showBreadcrumb: false,
   mode: 'light',
@@ -10,5 +10,5 @@ export default {
   isHeaderFixed: true,
   isUseTabsRouter: false,
   showHeader: true,
-  brandTheme: '#0052D9',
+  brandTheme: '#00A870',
 };
