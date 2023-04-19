@@ -200,7 +200,7 @@ watchEffect(() => {
 </script>
 <!-- teleport导致drawer 内 scoped样式问题无法生效 先规避下 -->
 <!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
-<style lang="less">
+<style scoped lang="less">
 .tdesign-setting {
   z-index: 100;
   position: fixed;
