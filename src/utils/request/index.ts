@@ -20,6 +20,7 @@ const transform: AxiosTransform = {
   // 处理请求数据。如果数据不是预期格式，可直接抛出错误
   transformRequestHook: (res, options) => {
     const { isTransformResponse, isReturnNativeResponse } = options;
+    // console.log('options within transformRequestHook:', options, isTransformResponse, isReturnNativeResponse);
 
     // 如果204无内容直接返回
     const method = res.config.method?.toLowerCase();
@@ -114,7 +115,6 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token = localStorage.getItem(TOKEN_NAME);
-    console.log(`token: ${token}`);
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme

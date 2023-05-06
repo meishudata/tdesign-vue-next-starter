@@ -22,7 +22,6 @@ export const useUserStore = defineStore('user', {
     async login(userInfo: Record<string, unknown>) {
       const { phone, code } = userInfo;
       const res = await request.post({ url: '/usr/signin', data: { phone, code } });
-      console.log(res, res.accessToken);
       if (res.accessToken) {
         this.token = decodeURIComponent(res.accessToken);
         localStorage.setItem(TOKEN_NAME, this.token);
