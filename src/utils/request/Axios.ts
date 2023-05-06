@@ -175,9 +175,11 @@ export class VAxios {
             reject(requestCatchHook(e, opt));
             return;
           }
+
           if (axios.isAxiosError(e)) {
             // 在这里重写Axios的错误信息
           }
+
           reject(e);
         });
     });

@@ -44,15 +44,15 @@ const transform: AxiosTransform = {
     }
 
     //  这里 code为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code } = data;
+    const { code, msg } = data;
 
     // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && code === 0;
-    if (hasSuccess) {
-      return data.data;
+    const wasSucceeded = data && code === 200; // server status code 200 represents success. 2023.5.6
+    if (wasSucceeded) {
+      return JSON.parse(data.data);
     }
 
-    throw new Error(`请求接口错误, 错误码: ${code}`);
+    throw new Error(`错误码: ${code} 错误信息：${msg}`);
   },
 
   // 请求前处理配置
@@ -114,6 +114,7 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token = localStorage.getItem(TOKEN_NAME);
+    console.log(`token: ${token}`);
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
@@ -155,11 +156,11 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       <CreateAxiosOptions>{
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // 例如: authenticationScheme: 'Bearer'
-        authenticationScheme: '',
+        authenticationScheme: 'Bearer',
         // 超时
         timeout: 10 * 1000,
         // 携带Cookie
-        withCredentials: true,
+        withCredentials: false,
         // 头信息
         headers: { 'Content-Type': ContentTypeEnum.Json },
         // 数据处理方式

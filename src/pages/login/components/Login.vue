@@ -58,8 +58,8 @@
         </t-input>
       </t-form-item>
 
-      <t-form-item class="verification-code" name="verifyCode">
-        <t-input v-model="formData.verifyCode" size="large" placeholder="请输入验证码" />
+      <t-form-item class="verification-code" name="code">
+        <t-input v-model="formData.code" size="large" placeholder="请输入验证码" />
         <t-button size="large" variant="outline" :disabled="countDown > 0" @click="sendCode">
           {{ countDown == 0 ? '发送验证码' : `${countDown}秒后可重发` }}
         </t-button>
@@ -94,7 +94,7 @@ const INITIAL_DATA = {
   phone: '',
   account: 'admin',
   password: 'admin',
-  verifyCode: '',
+  code: '',
   checked: false,
 };
 
@@ -102,7 +102,7 @@ const FORM_RULES: Record<string, FormRule[]> = {
   phone: [{ required: true, message: '手机号必填', type: 'error' }],
   account: [{ required: true, message: '账号必填', type: 'error' }],
   password: [{ required: true, message: '密码必填', type: 'error' }],
-  verifyCode: [{ required: true, message: '验证码必填', type: 'error' }],
+  code: [{ required: true, message: '验证码必填', type: 'error' }],
 };
 
 const type = ref('password');
