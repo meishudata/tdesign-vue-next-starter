@@ -1,6 +1,10 @@
 import uniq from 'lodash/uniq';
 import { createRouter, createWebHistory, RouteRecordRaw, useRoute } from 'vue-router';
 
+import { transformObjectToRoute } from '@/utils/route';
+
+import demoRouterListOrigin from './modules/demo';
+
 const env = import.meta.env.MODE || 'development';
 
 // 导入homepage相关固定路由
@@ -24,8 +28,10 @@ const defaultRouterList: Array<RouteRecordRaw> = [
 // 存放固定路由
 export const homepageRouterList: Array<RouteRecordRaw> = mapModuleRouterList(homepageModules);
 export const fixedRouterList: Array<RouteRecordRaw> = mapModuleRouterList(fixedModules);
+export const demoRouterList: Array<RouteRecordRaw> = transformObjectToRoute(demoRouterListOrigin);
 
-export const allRoutes = [...homepageRouterList, ...fixedRouterList, ...defaultRouterList];
+export const allRoutes = [...homepageRouterList, ...fixedRouterList, ...defaultRouterList, ...demoRouterList];
+console.log('allrouters', allRoutes);
 
 // 固定路由模块转换为路由
 export function mapModuleRouterList(modules: Record<string, unknown>): Array<RouteRecordRaw> {

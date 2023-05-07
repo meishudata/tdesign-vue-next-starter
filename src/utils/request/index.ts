@@ -2,9 +2,12 @@
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import isString from 'lodash/isString';
 import merge from 'lodash/merge';
+import { MessagePlugin } from 'tdesign-vue-next';
 
 import { TOKEN_NAME } from '@/config/global';
 import { ContentTypeEnum } from '@/constants';
+import router from '@/router';
+import { getUserStore } from '@/store';
 
 import { VAxios } from './Axios';
 import type { AxiosTransform, CreateAxiosOptions } from './AxiosTransform';
@@ -131,6 +134,24 @@ const transform: AxiosTransform = {
 
   // 响应错误处理
   responseInterceptorsCatch: (error: any, instance: AxiosInstance) => {
+    // console.log('error:', error, error.response.status);
+    if (error.response.status === 401) {
+      // Clear cached token.
+      getUserStore().removeToken();
+      localStorage.removeItem(TOKEN_NAME);
+
+      // Redirect to login.
+      router.push('/login');
+
+      // Just reject.
+      return Promise.reject(error);
+    }
+
+    if (error.response.status === 404) {
+      MessagePlugin.error('当前请求的接口不存在');
+      return Promise.reject(error);
+    }
+
     const { config } = error;
     if (!config || !config.requestOptions.retry) return Promise.reject(error);
 

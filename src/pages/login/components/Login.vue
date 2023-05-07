@@ -91,10 +91,10 @@ import { useUserStore } from '@/store';
 const userStore = useUserStore();
 
 const INITIAL_DATA = {
-  phone: '',
+  phone: '18749497555',
   account: 'admin',
   password: 'admin',
-  code: '',
+  code: '666666',
   checked: false,
 };
 
@@ -141,7 +141,7 @@ const onSubmit = async ({ validateResult }) => {
       const redirectUrl = redirect ? decodeURIComponent(redirect) : '/dashboard';
       router.push(redirectUrl);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       MessagePlugin.error(e.message);
     }
   }
