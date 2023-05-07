@@ -36,5 +36,21 @@ export async function getMenuList() {
     };
   });
 
-  return menus;
+  const list = menus
+    .filter((m: any) => m.pid === 0)
+    .map((m: any) => {
+      transformMenus(m, menus);
+      return m;
+    });
+  return list;
+}
+
+function transformMenus(curr: any, all: any) {
+  const children = all.filter((f: any) => f.pid === curr.id);
+  if (typeof children === 'undefined' || !children.length) return;
+
+  children.forEach((c) => {
+    transformMenus(c, all);
+    curr.children.push(c);
+  });
 }
