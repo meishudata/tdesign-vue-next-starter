@@ -31,7 +31,7 @@ export const fixedRouterList: Array<RouteRecordRaw> = mapModuleRouterList(fixedM
 export const demoRouterList: Array<RouteRecordRaw> = transformObjectToRoute(demoRouterListOrigin);
 
 export const allRoutes = [...homepageRouterList, ...fixedRouterList, ...defaultRouterList, ...demoRouterList];
-console.log('allrouters', allRoutes);
+// console.log('allrouters', allRoutes);
 
 // 固定路由模块转换为路由
 export function mapModuleRouterList(modules: Record<string, unknown>): Array<RouteRecordRaw> {

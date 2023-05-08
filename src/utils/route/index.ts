@@ -82,7 +82,6 @@ function dynamicImport(dynamicViewsModules: Record<string, () => Promise<Recorda
 
 // 将背景对象变成路由对象
 export function transformObjectToRoute<T = RouteItem>(routeList: RouteItem[]): T[] {
-  console.log('routeList', routeList);
   routeList.forEach(async (route) => {
     const component = route.component as string;
 
