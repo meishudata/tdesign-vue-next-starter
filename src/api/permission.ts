@@ -42,6 +42,7 @@ export async function getMenuList() {
       transformMenus(m, menus);
       return m;
     });
+  console.log(list);
   return list;
 }
 

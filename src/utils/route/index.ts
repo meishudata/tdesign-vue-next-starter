@@ -34,11 +34,12 @@ async function getMenuIcon(iconName: string) {
 function asyncImportRoute(routes: RouteItem[] | undefined) {
   dynamicViewsModules = dynamicViewsModules || import.meta.glob('../../pages/**/*.vue');
   if (!routes) return;
+  // console.log('dynamicViewsModules:', dynamicViewsModules);
 
   routes.forEach(async (item) => {
     const { component, name } = item;
     const { children } = item;
-
+    // console.log(`component: ${component}, name: ${name}`, children);
     if (component) {
       const layoutFound = LayoutMap.get(component.toUpperCase());
       if (layoutFound) {
@@ -59,11 +60,13 @@ function asyncImportRoute(routes: RouteItem[] | undefined) {
 function dynamicImport(dynamicViewsModules: Record<string, () => Promise<Recordable>>, component: string) {
   const keys = Object.keys(dynamicViewsModules);
   const matchKeys = keys.filter((key) => {
+    // ../../pages/dashboard/base/index.vue
     const k = key.replace('../../pages', '');
     const startFlag = component.startsWith('/');
     const endFlag = component.endsWith('.vue') || component.endsWith('.tsx');
     const startIndex = startFlag ? 0 : 1;
     const lastIndex = endFlag ? k.length : k.lastIndexOf('.');
+    // remove prefix(../../pages) and suffix(.vue or .tsx) from k, and compare to component.
     return k.substring(startIndex, lastIndex) === component;
   });
   if (matchKeys?.length === 1) {
@@ -98,8 +101,10 @@ export function transformObjectToRoute<T = RouteItem>(routeList: RouteItem[]): T
     } else {
       throw new Error('component is undefined');
     }
+
+    // console.log('route.children && asyncImportRoute(route.children);', route.children);
     // eslint-disable-next-line no-unused-expressions
-    route.children && asyncImportRoute(route.children);
+    route.children && route.children.length && asyncImportRoute(route.children);
     if (route.meta.icon) route.meta.icon = await getMenuIcon(route.meta.icon);
   });
 
