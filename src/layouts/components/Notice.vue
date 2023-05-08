@@ -40,7 +40,7 @@
     </template>
     <t-badge :count="unreadMsg.length" :offset="[4, 4]">
       <t-button theme="default" shape="square" variant="text">
-        <t-icon name="mail" />
+        <t-icon name="notification" />
       </t-button>
     </t-badge>
   </t-popup>
