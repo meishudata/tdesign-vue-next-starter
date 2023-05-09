@@ -33,13 +33,12 @@ async function getMenuIcon(iconName: string) {
 // 动态引入路由组件
 function asyncImportRoute(routes: RouteItem[] | undefined) {
   dynamicViewsModules = dynamicViewsModules || import.meta.glob('../../pages/**/*.vue');
-  if (!routes) return;
+  if (!routes || !routes.length) return;
   // console.log('dynamicViewsModules:', dynamicViewsModules);
 
   routes.forEach(async (item) => {
     const { component, name } = item;
     const { children } = item;
-    // console.log(`component: ${component}, name: ${name}`, children);
     if (component) {
       const layoutFound = LayoutMap.get(component.toUpperCase());
       if (layoutFound) {
@@ -102,7 +101,6 @@ export function transformObjectToRoute<T = RouteItem>(routeList: RouteItem[]): T
       throw new Error('component is undefined');
     }
 
-    // console.log('route.children && asyncImportRoute(route.children);', route.children);
     // eslint-disable-next-line no-unused-expressions
     route.children && route.children.length && asyncImportRoute(route.children);
     if (route.meta.icon) route.meta.icon = await getMenuIcon(route.meta.icon);

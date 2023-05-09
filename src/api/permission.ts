@@ -17,7 +17,9 @@ export async function getMenuList() {
       path: a.path,
       name: a.name,
       component: a.component,
-      components: a.components,
+      // Don't set both. if components is set, route will be error.
+      // [Vue Router warn]: Record with path "/dashboard/base" is either missing a "component(s)" or "children" property.
+      // components: a.components,
       redirect: a.redirect,
       meta: {
         title: a.metaTitle,
@@ -38,11 +40,12 @@ export async function getMenuList() {
 
   const list = menus
     .filter((m: any) => m.pid === 0)
+    .sort()
     .map((m: any) => {
       transformMenus(m, menus);
       return m;
     });
-  console.log(list);
+
   return list;
 }
 
@@ -54,4 +57,7 @@ function transformMenus(curr: any, all: any) {
     transformMenus(c, all);
     curr.children.push(c);
   });
+
+  // sort menu
+  curr.children = curr.children.sort();
 }

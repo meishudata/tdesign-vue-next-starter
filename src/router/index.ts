@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw, useRoute } from 'vue-ro
 
 import { transformObjectToRoute } from '@/utils/route';
 
-import demoRouterListOrigin from './modules/demo';
+// import demoRouterListOrigin from './modules/demo';
 
 const env = import.meta.env.MODE || 'development';
 
@@ -28,18 +28,19 @@ const defaultRouterList: Array<RouteRecordRaw> = [
 // 存放固定路由
 export const homepageRouterList: Array<RouteRecordRaw> = mapModuleRouterList(homepageModules);
 export const fixedRouterList: Array<RouteRecordRaw> = mapModuleRouterList(fixedModules);
-export const demoRouterList: Array<RouteRecordRaw> = transformObjectToRoute(demoRouterListOrigin);
+// export const demoRouterList: Array<RouteRecordRaw> = transformObjectToRoute(demoRouterListOrigin);
 
-export const allRoutes = [...homepageRouterList, ...fixedRouterList, ...defaultRouterList, ...demoRouterList];
-// console.log('allrouters', allRoutes);
+// export const allRoutes = [...homepageRouterList, ...fixedRouterList, ...defaultRouterList];
+export const allRoutes = [...fixedRouterList, ...defaultRouterList];
 
-// 固定路由模块转换为路由
+// 固定路由模块转换为路由 ["./modules/demo.ts"] ["./modules/result.ts"] ["./modules/user.ts"]
 export function mapModuleRouterList(modules: Record<string, unknown>): Array<RouteRecordRaw> {
   const routerList: Array<RouteRecordRaw> = [];
   Object.keys(modules).forEach((key) => {
     // @ts-ignore
-    const mod = modules[key].default || {};
+    const mod = modules[key].default || {}; // ["./modules/demo.ts"].default
     const modList = Array.isArray(mod) ? [...mod] : [mod];
+    transformObjectToRoute(modList.filter((r) => typeof r.component === 'string'));
     routerList.push(...modList);
   });
   return routerList;
