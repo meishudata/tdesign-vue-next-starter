@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     token: localStorage.getItem(TOKEN_NAME) || '', // 默认token不走权限
     userInfo: { ...InitUserInfo },
+    usr: {} as any,
   }),
   getters: {
     roles: (state) => {
@@ -22,6 +23,7 @@ export const useUserStore = defineStore('user', {
     async login(userInfo: Record<string, unknown>) {
       const { phone, code } = userInfo;
       const res = await request.post({ url: '/usr/signin', data: { phone, code } });
+      this.usr = res;
       if (res.accessToken) {
         this.token = decodeURIComponent(res.accessToken);
         localStorage.setItem(TOKEN_NAME, this.token);
@@ -30,21 +32,7 @@ export const useUserStore = defineStore('user', {
       }
     },
     async getUserInfo() {
-      const mockRemoteUserInfo = async (token: string) => {
-        if (token === 'main_token') {
-          return {
-            name: 'td_main',
-            roles: ['all'], // 前端权限模型使用 如果使用请配置modules/permission-fe.ts使用
-          };
-        }
-        return {
-          name: 'td_dev',
-          roles: ['UserIndex', 'DashboardBase', 'login'], // 前端权限模型使用 如果使用请配置modules/permission-fe.ts使用
-        };
-      };
-      const res = await mockRemoteUserInfo(this.token);
-
-      this.userInfo = res;
+      this.userInfo = this.usr || {};
     },
     async logout() {
       localStorage.removeItem(TOKEN_NAME);

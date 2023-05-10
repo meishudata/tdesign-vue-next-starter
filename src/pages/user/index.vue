@@ -3,10 +3,10 @@
     <t-col :flex="3">
       <div class="user-left-greeting">
         <div>
-          Hi，Image
-          <span class="regular"> 下午好，今天是你加入鹅厂的第 100 天～</span>
+          Hi，{{ usr.name }}
+          <span class="regular"> 下午好</span>
         </div>
-        <img src="@/assets/assets-tencent-logo.png" class="logo" />
+        <!-- <img src="@/assets/assets-tencent-logo.png" class="logo" /> -->
       </div>
 
       <t-card class="user-info-list" title="个人信息" :bordered="false">
@@ -16,13 +16,25 @@
           </t-button>
         </template>
         <t-row class="content" justify="space-between">
-          <t-col v-for="(item, index) in USER_INFO_LIST" :key="index" class="contract" :span="item.span || 3">
-            <div class="contract-title">
-              {{ item.title }}
-            </div>
-            <div class="contract-detail">
-              {{ item.content }}
-            </div>
+          <t-col class="contract" :span="3">
+            <div class="contract-title">手机号码</div>
+            <div class="contract-detail">{{ usr.phone }}</div>
+          </t-col>
+          <t-col class="contract" :span="9">
+            <div class="contract-title">昵称</div>
+            <div class="contract-detail">{{ usr.nickname }}</div>
+          </t-col>
+          <t-col class="contract" :span="3">
+            <div class="contract-title">国家</div>
+            <div class="contract-detail">{{ usr.country }}</div>
+          </t-col>
+          <t-col class="contract" :span="3">
+            <div class="contract-title">省份</div>
+            <div class="contract-detail">{{ usr.prov }}</div>
+          </t-col>
+          <t-col class="contract" :span="3">
+            <div class="contract-title">市县</div>
+            <div class="contract-detail">{{ usr.city }}</div>
           </t-col>
         </t-row>
       </t-card>
@@ -52,40 +64,6 @@
         </t-tabs>
       </t-card>
     </t-col>
-
-    <t-col :flex="1">
-      <t-card class="user-intro" :bordered="false">
-        <t-avatar size="80px">T</t-avatar>
-        <div class="name">My Account</div>
-        <div class="position">XXG 港澳业务拓展组员工 直客销售</div>
-      </t-card>
-
-      <t-card title="团队成员" class="user-team" :bordered="false">
-        <template #actions>
-          <t-button theme="default" shape="square" variant="text">
-            <t-icon name="ellipsis" />
-          </t-button>
-        </template>
-        <t-list :split="false">
-          <t-list-item v-for="(item, index) in TEAM_MEMBERS" :key="index">
-            <t-list-item-meta :image="item.avatar" :title="item.title" :description="item.description" />
-          </t-list-item>
-        </t-list>
-      </t-card>
-
-      <t-card title="服务产品" class="product-container" :bordered="false">
-        <template #actions>
-          <t-button theme="default" shape="square" variant="text">
-            <t-icon name="ellipsis" />
-          </t-button>
-        </template>
-        <t-row class="content" :getters="16">
-          <t-col v-for="(item, index) in PRODUCT_LIST" :key="index" :span="3">
-            <component :is="getIcon(item)"></component>
-          </t-col>
-        </t-row>
-      </t-card>
-    </t-col>
   </t-row>
 </template>
 <script lang="ts">
@@ -100,15 +78,10 @@ import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 
-import ProductAIcon from '@/assets/assets-product-1.svg';
-import ProductBIcon from '@/assets/assets-product-2.svg';
-import ProductCIcon from '@/assets/assets-product-3.svg';
-import ProductDIcon from '@/assets/assets-product-4.svg';
-import { useSettingStore } from '@/store';
+import { getUserStore, useSettingStore } from '@/store';
 import { changeChartsTheme } from '@/utils/color';
 import { LAST_7_DAYS } from '@/utils/date';
 
-import { PRODUCT_LIST, TEAM_MEMBERS, USER_INFO_LIST } from './constants';
 import { getFolderLineDataSet } from './index';
 
 echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer, LegendComponent]);
@@ -117,6 +90,17 @@ let lineContainer: HTMLElement;
 let lineChart: echarts.ECharts;
 const store = useSettingStore();
 const chartColors = computed(() => store.chartColors);
+
+const userStore = getUserStore();
+const { usr } = userStore;
+
+const usrInfo = () => {
+  const arr = [];
+  for (const p in usr) {
+    console.log(p);
+  }
+};
+usrInfo();
 
 const onLineChange = (value) => {
   lineChart.setOption(getFolderLineDataSet(value));
@@ -153,21 +137,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', updateContainer);
 });
-
-const getIcon = (type) => {
-  switch (type) {
-    case 'a':
-      return ProductAIcon;
-    case 'b':
-      return ProductBIcon;
-    case 'c':
-      return ProductCIcon;
-    case 'd':
-      return ProductDIcon;
-    default:
-      return ProductAIcon;
-  }
-};
 
 watch(
   () => store.brandTheme,
