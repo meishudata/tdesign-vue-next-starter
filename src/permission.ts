@@ -81,5 +81,9 @@ router.afterEach((to) => {
     userStore.logout();
     permissionStore.restoreRoutes();
   }
+
+  // Set document title
+  document.title = router.currentRoute.value.meta.title as any;
+
   NProgress.done();
 });

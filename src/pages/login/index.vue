@@ -28,9 +28,10 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import TdesignSetting from '@/layouts/setting.vue';
+import router from '@/router';
 
 import LoginHeader from './components/Header.vue';
 import Login from './components/Login.vue';
@@ -40,6 +41,10 @@ const type = ref('login');
 const switchType = (val: string) => {
   type.value = val;
 };
+
+onMounted(() => {
+  document.title = (router.currentRoute.value.meta.title || '登录') as string;
+});
 </script>
 
 <style lang="less" scoped>
