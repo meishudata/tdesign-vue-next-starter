@@ -61,7 +61,7 @@ const getMenuList = (list: MenuRoute[], basePath?: string): ListItemType[] => {
   }
   // 如果meta中有orderNo则按照从小到大排序
   list.sort((a, b) => {
-    return (a.meta?.orderNo || 0) - (b.meta?.orderNo || 0);
+    return (a.meta?.orderNo || 1000) - (b.meta?.orderNo || 1000);
   });
   return list
     .map((item) => {

@@ -18,6 +18,7 @@ router.beforeEach(async (to, from, next) => {
 
   const userStore = getUserStore();
   const { token } = userStore;
+
   if (token) {
     if (to.path === '/login') {
       next();
