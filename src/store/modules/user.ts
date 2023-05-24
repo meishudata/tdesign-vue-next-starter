@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     [TOKEN_NAME]: '', // 默认token不走权限
     userInfo: { ...InitUserInfo },
+    token: localStorage.getItem(TOKEN_NAME),
     usr: {} as any,
   }),
   getters: {
@@ -27,7 +28,9 @@ export const useUserStore = defineStore('user', {
       const res = await request.post({ url: '/usr/signin', data: { phone, code } });
       this.usr = res;
       if (res.accessToken) {
-        this.token = decodeURIComponent(res.accessToken);
+        const token = decodeURIComponent(res.accessToken);
+        this.token = token;
+        this.setToken(token);
         localStorage.setItem(TOKEN_NAME, this.token);
       } else {
         throw res;

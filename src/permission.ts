@@ -4,10 +4,11 @@ import NProgress from 'nprogress'; // progress bar
 import { MessagePlugin } from 'tdesign-vue-next';
 import { RouteRecordRaw } from 'vue-router';
 
-import { TOKEN_NAME } from '@/config/global';
 import router from '@/router';
 import { getPermissionStore, getUserStore } from '@/store';
 import { PAGE_NOT_FOUND_ROUTE } from '@/utils/route/constant';
+
+import { TOKEN_NAME } from './config/global';
 
 NProgress.configure({ showSpinner: false });
 

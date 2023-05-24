@@ -118,7 +118,7 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const userStore = getUserStore();
-    const token = userStore[TOKEN_NAME];
+    const { token } = userStore;
 
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
