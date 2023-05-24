@@ -94,7 +94,7 @@ const chartColors = computed(() => store.chartColors);
 const userStore = getUserStore();
 const { usr } = userStore;
 
-const onLineChange = (value) => {
+const onLineChange = (value: any) => {
   lineChart.setOption(getFolderLineDataSet(value));
 };
 
